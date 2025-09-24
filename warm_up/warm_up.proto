@@ -1,0 +1,11 @@
+syntax = "proto2";
+
+message Fish {
+  required string species = 1;
+  optional int32 size_in_cm = 2;
+}
+
+// Aquarium can contain multiple fishes
+message Aquarium {
+  repeated Fish fishes = 1;
+}

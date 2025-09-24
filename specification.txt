@@ -1,0 +1,8 @@
+Ground Station Protocol Specification (v0.1)
+
+Outbound transmission:
+- engine burn time and angle of thrust
+
+Inbound transmission:
+- status message
+- 3-axis velocity (x, y, z)

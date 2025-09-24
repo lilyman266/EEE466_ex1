@@ -1,0 +1,28 @@
+syntax = "proto2";
+
+// python -m grpc_tools.protoc jupyter_probe.proto --proto_path=. --python_out=.
+
+message Message1 {
+  required string to_send = 1;
+}
+
+//8 is 00001000 - int32
+//16 is 00010000 - int32
+//24 is 00011000 - int32
+
+message Message1andahalf {
+  required int32 num = 1;
+  required int32 num1 = 2;
+  required int32 num2 = 3;
+}
+
+message Message2 {
+  required string to_send = 1;
+  required Message1andahalf type = 2;
+}
+
+message Message3 {
+  required float engine_burn_time = 1;
+  required float angle_of_thrust = 2;
+}
+
