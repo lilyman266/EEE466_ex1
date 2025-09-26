@@ -43,21 +43,21 @@ def calculate_thrust(current_velocity):
 #   num2: 1
 # }
 def recv_message(s):
-    message = s.recv(2048)
+    message, sender = s.recvfrom(2048)
     new_message = jupyter_probe_pb2.Message2()
     new_message.ParseFromString(message)
     received_telemetry_message = new_message.to_send
     x, y, z = new_message.type.num, new_message.type.num1, new_message.type.num2
     current_velocity = np.array([x, y, z])
     print(new_message)
-    return current_velocity
+    return current_velocity, sender
 
-def send_message(s, burn_time, angle_of_thrust):
+def send_message(s, burn_time, angle_of_thrust, sender):
     new_message = jupyter_probe_pb2.Message3()
     new_message.engine_burn_time = burn_time
     new_message.angle_of_thrust = angle_of_thrust
     message = new_message.SerializeToString()
-    s.sendto(message, ("127.0.0.1", 64037))
+    s.sendto(message, sender)
     print(f"sent message: {message} with burn time {burn_time} and angle_of_thrust {angle_of_thrust}")
     # binary_representation = ''.join(format(byte, '08b') for byte in message)
     # print(f"bin rep:{binary_representation}")
@@ -86,7 +86,7 @@ def run():
         # print(received_message)
 
         # receive message 2 from satellite
-        current_velocity = recv_message(s)
+        current_velocity, sender = recv_message(s)
 
         # calculate parameters to send
         burn_time, angle_of_thrust = calculate_thrust(current_velocity)
@@ -94,7 +94,7 @@ def run():
         #burn_time, angle_of_thrust = calculate_thrust(np.array([4, 0, 1]))
 
         # send message to satellite
-        send_message(s, burn_time, angle_of_thrust)
+        send_message(s, burn_time, angle_of_thrust, sender)
 
         # s.close()
         # s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
