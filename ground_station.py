@@ -6,20 +6,7 @@ import math
 
 import jupyter_probe_pb2
 
-#0a2e5472616e736d697373696f6e206f662076656c6f63697479206461746120696e20782c20792c207a20617865732e1206080410001801
-
-
-# Ground Station Protocol Specification (v0.1)
-
-# Outbound transmission:
-# - engine burn time and angle of thrust
-
-# Inbound transmission:
-# - status message
-# - 3-axis velocity (x, y, z)
-
-# My ip: 127.0.0.1:50320
-# Probe ip: 127.0.0.1:64037#
+ # The secret is "You saveed the day! The secret is Neptune"
 
 def calculate_thrust(current_velocity):
     # Constants
